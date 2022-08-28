@@ -83,9 +83,9 @@ public class WorkshopController {
 		return wDTO;
 	}
 	
-	@RequestMapping(value = "/{name}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{email}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public WorkshopDTO create(@PathVariable String name, @RequestBody WorkshopDTO workshopDTO) throws ParseException {
+    public WorkshopDTO create(@PathVariable String email, @RequestBody WorkshopDTO workshopDTO) throws ParseException {
 		Workshop workshop = convertToEntity(workshopDTO);
 		workshop.setEnabled(true);
 		// set creation datetime 
@@ -96,7 +96,7 @@ public class WorkshopController {
         workshop.setSubGroup(subGroupDAO.findById(workshopDTO.getSubGroupId()));
         // Creator
         WorkshopTutor wt = new WorkshopTutor();
-        wt.setSubGroupMember(subGroupMemberDAO.findBySubGroupAndFabber(workshopDTO.getSubGroupId(), name));
+        wt.setSubGroupMember(subGroupMemberDAO.findBySubGroupAndFabber(workshopDTO.getSubGroupId(), email));
         wt.setWorkshop(workshop);
         workshop.getWorkshopTutors().add(wt);
         

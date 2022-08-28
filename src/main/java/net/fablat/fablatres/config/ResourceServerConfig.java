@@ -4,12 +4,10 @@ import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,10 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-//@EnableWebFlux
 public class ResourceServerConfig {
 
-    @Bean
+    /*@Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors();
 //                .and()
@@ -40,7 +37,7 @@ public class ResourceServerConfig {
 //                .oauth2ResourceServer()
 //                .jwt();
         return http.build();
-    }
+    }*/
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -55,17 +52,19 @@ public class ResourceServerConfig {
         };
     }
 
-/*    @Bean
+/*  // The following 2 beans work for WebFlux
+
+    @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) throws Exception {
-        http.cors()
-                .and()
+        http.cors();
+//                .and()
 //                .mvcMatcher("/hello")
 //                .authorizeRequests()
 //                .mvcMatchers("/hello")
 //                .access("hasAuthority('SCOPE_fablat.read')")
 //                .and()
-                .oauth2ResourceServer()
-                .jwt();
+//                .oauth2ResourceServer()
+//                .jwt();
         return http.build();
     }
 
