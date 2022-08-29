@@ -75,7 +75,7 @@ public class FabberController {
 	
 	@RequestMapping(value = "/me/update/{email}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void updateMe(@PathVariable String email, @RequestBody FabberDTO fabberDTO) {
+    public FabberDTO updateMe(@PathVariable String email, @RequestBody FabberDTO fabberDTO) {
         Fabber fabber = fabberDAO.findByEmail(email);
         fabber.setFirstName(fabberDTO.getFirstName());
         fabber.setLastName(fabberDTO.getLastName());
@@ -94,7 +94,17 @@ public class FabberController {
 			fabber.setLab(null);
 			fabber.setIsNomade(true);
 		}
-        fabberDAO.makePersistent(fabber);
+
+		Fabber persisted = fabberDAO.makePersistent(fabber);
+		FabberDTO returnDTO = convertToDTO(persisted);
+		// Populate authorities
+		returnDTO.setAuthorities(
+				persisted.getRoleFabbers().stream()
+						.map(roleFabber -> roleFabber.getRole().getName())
+						.collect(Collectors.toList())
+		);
+
+        return returnDTO;
     }
 	
 	/*@RequestMapping(value = "/me/update-password", method = RequestMethod.POST)

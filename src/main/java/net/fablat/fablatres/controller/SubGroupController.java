@@ -252,11 +252,11 @@ public class SubGroupController {
         activityLogDAO.makePersistent(activity);
 	}
 	
-	@RequestMapping(value = "/{idSubGroup}/add-member/{name}", method = RequestMethod.POST)
+	@RequestMapping(value = "/{idSubGroup}/add-member/{email}", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.OK)
-	public void addMember(@PathVariable Integer idSubGroup, @PathVariable String name,
+	public void addMember(@PathVariable Integer idSubGroup, @PathVariable String email,
 						  @RequestBody SubGroupMemberDTO subGroupMemberDTO) {
-		SubGroupMember me = subGroupMemberDAO.findBySubGroupAndFabber(idSubGroup, name);
+		SubGroupMember me = subGroupMemberDAO.findBySubGroupAndFabber(idSubGroup, email);
 		// action only allowed to coordinators
 		if (!me.getIsCoordinator()) {
 			return;

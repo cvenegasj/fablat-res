@@ -93,8 +93,8 @@ public class GroupController {
 	}
 	
 	@RequestMapping(value = "/find-all-fabber/{idFabber}", method = RequestMethod.GET)
-	public List<GroupDTO> findAllFabber(@PathVariable("idFabber") Integer idFabber) {
-		List<GroupDTO> returnList = new ArrayList<GroupDTO>();
+	public List<GroupDTO> findAllFabber(@PathVariable Integer idFabber) {
+		List<GroupDTO> returnList = new ArrayList<>();
 		
 		// Mapping user's group and subgroups
 		for (GroupMember gm : groupMemberDAO.findAllByFabber(idFabber)) {
